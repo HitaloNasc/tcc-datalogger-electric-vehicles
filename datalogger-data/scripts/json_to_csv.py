@@ -74,11 +74,11 @@ def main():
     processed_dir = project_dir / "data" / "processed"
     
     # Encontrar todos os arquivos que correspondem ao padrão
-    pattern = str(raw_dir / "test_*_10_min_07_01.json")
+    pattern = str(raw_dir / "teste_gps_09_01.json")
     json_files = glob.glob(pattern)
     
     if not json_files:
-        print("Nenhum arquivo encontrado com o padrão 'test_*_10_min_07_01.json'")
+        print("Nenhum arquivo encontrado com o padrão 'teste_gps_09_01.json'")
         return
     
     print(f"Encontrados {len(json_files)} arquivo(s) JSON\n")
