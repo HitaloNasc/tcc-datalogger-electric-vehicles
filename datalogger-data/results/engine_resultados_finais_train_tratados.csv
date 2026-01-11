@@ -1,0 +1,6 @@
+Modelo,R²,MAE,RMSE,Tempo Treino,CPU (%),RAM (MB),Melhor Config
+RandomForest,0.9949706704779461,0.03910248756219171,0.053504696507594145,3.1992688179016113,5.0055555555555555,2069.0078125,"{'n_estimators': 300, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': 1.0, 'max_depth': 20}"
+GradientBoosting,0.9928057284572226,0.04809537972976904,0.06399267608738034,1.943732500076294,27.061111111111114,2089.33984375,"{'subsample': 0.9, 'n_estimators': 300, 'max_depth': 7, 'learning_rate': 0.05, 'colsample_bytree': 0.9}"
+DecisionTree,0.986683740796139,0.05771393034825876,0.0870618676282235,0.19487786293029785,7.008333333333333,2065.15234375,"{'min_samples_split': 2, 'min_samples_leaf': 3, 'max_depth': None, 'criterion': 'squared_error'}"
+KNN,0.8824201773804872,0.18582201999149872,0.25870406900242804,0.23624920845031738,8.291666666666666,2065.140625,"{'weights': 'distance', 'n_neighbors': 3, 'metric': 'manhattan'}"
+MLP,0.7280725478101363,0.29305303713293057,0.3934262976985118,11.278230428695679,2.8900568181818183,2089.3515625,"{'solver': 'adam', 'learning_rate_init': 0.001, 'hidden_layer_sizes': (50, 25), 'alpha': 0.0001, 'activation': 'relu'}"
