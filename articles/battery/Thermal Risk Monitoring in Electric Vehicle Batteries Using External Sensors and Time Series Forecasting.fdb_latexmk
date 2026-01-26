@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1768493332.08153 "/Users/hitalo/Documents/tcc-datalogger/articles/battery/Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.pdf" "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting" 1768493332.92885 0
-  "/Users/hitalo/Documents/tcc-datalogger/articles/battery/Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" 1768493331.88407 45166 3974bd4ff7d3fac377bbed19ab8133f8 ""
+["pdflatex"] 1769427079.05937 "/Users/hitalo/Documents/tcc-datalogger/articles/battery/Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.pdf" "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting" 1769427079.89285 0
+  "/Users/hitalo/Documents/tcc-datalogger/articles/battery/Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" 1769427078.47624 45170 dfaf8a12d89269d3cc79019c133800b8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -65,8 +65,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1767903546 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1767903506 3345735 521a1776e3c84ea9ee0bf36bb716e1aa ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.aux" 1768493332.89353 7157 e9be41687c86f14bf997ff4941983072 "pdflatex"
-  "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" 1768493331.88407 45166 3974bd4ff7d3fac377bbed19ab8133f8 ""
+  "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.aux" 1769427079.85858 7157 e9be41687c86f14bf997ff4941983072 "pdflatex"
+  "Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Time Series Forecasting.tex" 1769427078.47624 45170 dfaf8a12d89269d3cc79019c133800b8 ""
   "img/battery_eda_boxplot_temp_tratados.png" 1768491240.3292 17574 7ab498c97ab26ef834ad40a76b201319 ""
   "img/battery_eda_correlacao_tratados.png" 1768491240.33395 52267 ac2abad498debb4fe2b0c48def4efa0b ""
   "img/battery_eda_evolucao_temp_tratados.png" 1768491240.33693 45341 095024055582caa957224f579a2d633f ""
