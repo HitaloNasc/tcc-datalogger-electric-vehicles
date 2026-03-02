@@ -31,9 +31,11 @@
 \titlerunning{Thermal Risk Monitoring in EV Batteries}
 
 % ---- BLIND REVIEW: no author identification ----
-\author{Anonymous Author(s)}
-\authorrunning{Anonymous Author(s)}
-\institute{Anonymous Institute(s)}
+\author{Hítalo Bruno de Azevedo Nascimento 
+    \and Katharian Abrahel de Lima Vieira Gomes
+    \and Jamilson Ramalho Dantas}
+\authorrunning{H. B. A. Nascimento et al.}
+\institute{Federal University of Pernambuco}
 
 \maketitle
 
@@ -81,12 +83,12 @@ Communication between ESP32 and gateway was performed via Bluetooth Low Energy. 
 \begin{figure}[t]
 \centering
 \subfloat[Architecture overview]{%
-  \includegraphics[width=0.48\textwidth]{img/data-architecture.png}%
+  \includegraphics[width=0.75\textwidth]{img/data-architecture.png}%
   \label{fig:data-architecture}%
 }
 \hfill
 \subfloat[ESP32-based sensing prototype]{%
-  \includegraphics[width=0.48\textwidth]{img/cicuit-sensors.png}%
+  \includegraphics[width=0.75\textwidth]{img/cicuit-sensors.png}%
   \label{fig:prototype}%
 }
 \caption{Data acquisition and sensing setup used in this work.}
@@ -103,24 +105,24 @@ Experiments were conducted using an electric motorcycle instrumented with the de
 
 To induce operational variability, multiple riding modes were used across runs (Eco, Normal, Turbo), producing distinct power delivery profiles and thermal responses. Routes were repeated to support comparability and reproducibility; GPS trajectories were used to reconstruct route maps for each mode.
 
-\begin{figure}[t]
+\begin{figure}[htbp]
 \centering
 \subfloat[Instrumented platform]{%
-  \includegraphics[width=0.48\textwidth]{img/motocycle.png}%
+  \includegraphics[width=0.75\textwidth]{img/motocycle.png}%
   \label{fig:motorcycle}%
 }
 \hfill
-\subfloat[Routes by mode]{%
-  \includegraphics[width=0.48\textwidth]{img/map-eco.png}%
+\subfloat[Route in economical mode]{%
+  \includegraphics[width=0.5\textwidth]{img/map-eco.png}%
 }
 \\[-0.2em]
-\subfloat[]{%
-  \includegraphics[width=0.31\textwidth]{img/map-nor.png}%
+\subfloat[Route in normal mode]{%
+  \includegraphics[width=0.5\textwidth]{img/map-nor.png}%
   \label{fig:map-nor}%
 }
-\hfill
-\subfloat[]{%
-  \includegraphics[width=0.31\textwidth]{img/map-tur.png}%
+\\[-0.2em]
+\subfloat[Route in turbo mode]{%
+  \includegraphics[width=0.5\textwidth]{img/map-tur.png}%
   \label{fig:map-tur}%
 }
 \caption{Experimental setup and reconstructed routes used during data collection.}
@@ -167,12 +169,12 @@ Across all runs, battery surface temperature increased gradually and monotonical
 \begin{figure}[t]
 \centering
 \subfloat[Temperature evolution]{%
-  \includegraphics[width=0.48\textwidth]{img/battery_eda_evolucao_temp_tratados.png}%
+  \includegraphics[width=0.75\textwidth]{img/battery_eda_evolucao_temp_tratados.png}%
   \label{fig:temp-evolution}%
 }
 \hfill
 \subfloat[Temperature distribution]{%
-  \includegraphics[width=0.48\textwidth]{img/battery_eda_boxplot_temp_tratados.png}%
+  \includegraphics[width=0.75\textwidth]{img/battery_eda_boxplot_temp_tratados.png}%
   \label{fig:temp-boxplot}%
 }
 \caption{Battery temperature analysis across driving modes.}
@@ -210,12 +212,12 @@ KNN               & 0.9747 & 0.0725 & 0.1370 & 0.110 & 9.29  & 1809 \\
 \begin{figure}[t]
 \centering
 \subfloat[Correlation matrix]{%
-  \includegraphics[width=0.48\textwidth]{img/battery_eda_correlacao_tratados.png}%
+  \includegraphics[width=0.6\textwidth]{img/battery_eda_correlacao_tratados.png}%
   \label{fig:corr-matrix}%
 }
 \hfill
 \subfloat[Model comparison]{%
-  \includegraphics[width=0.48\textwidth]{img/battery_performance_modelos_tratados.png}%
+  \includegraphics[width=0.6\textwidth]{img/battery_performance_modelos_tratados.png}%
   \label{fig:model-performance}%
 }
 \caption{Relationship analysis and prediction performance overview.}
