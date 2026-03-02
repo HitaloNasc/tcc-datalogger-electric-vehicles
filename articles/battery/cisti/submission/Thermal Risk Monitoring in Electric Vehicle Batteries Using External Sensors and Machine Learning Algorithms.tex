@@ -1,0 +1,264 @@
+\documentclass[runningheads]{llncs}
+
+% ---- Encoding / Fonts ----
+\usepackage[T1]{fontenc}
+
+% ---- Figures / Tables ----
+\usepackage{graphicx}
+\usepackage{float}     % for [H] if needed
+
+% Subfigures (kept to preserve original \subfloat usage)
+\usepackage{subfig}
+
+% ---- Math ----
+\usepackage{amsmath,amssymb}
+
+% ---- Text / URLs ----
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+% Slightly tighter float placement (does not change margins/line spacing)
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.90}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.85}
+
+\begin{document}
+
+\title{Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Machine Learning Algorithms}
+\titlerunning{Thermal Risk Monitoring in EV Batteries}
+
+% ---- BLIND REVIEW: no author identification ----
+\author{Anonymous Author(s)}
+\authorrunning{Anonymous Author(s)}
+\institute{Anonymous Institute(s)}
+
+\maketitle
+
+\begin{abstract}
+Thermal safety remains a critical challenge for electric vehicles, as abnormal temperature evolution in lithium ion batteries may lead to severe degradation or catastrophic failure. Conventional battery thermal monitoring is primarily performed by the Battery Management System, which relies on internal sensors, fixed thresholds, and proprietary data access. These characteristics limit adaptability to real world operating conditions and restrict deployment in retrofitted or third party scenarios.
+
+This paper presents a machine learning-based approach for battery thermal monitoring and early thermal risk awareness using exclusively external, non-intrusive temperature sensing. A low-cost sensing architecture based on an ESP32 microcontroller was developed to collect battery surface temperature, ambient temperature, and operational data during real-world riding experiments with an electric motorcycle. The collected telemetry was transmitted via a mobile gateway and processed in a backend infrastructure for temporal data analysis.
+
+Battery thermal behavior was modeled as a supervised regression problem with temporal dependence, and multiple machine learning algorithms, including K Nearest Neighbors, Decision Trees, Random Forest, Gradient Boosting, and Multilayer Perceptron, were evaluated. Results demonstrate that supervised learning models incorporating engineered temporal features can accurately capture battery surface temperature evolution, despite minor data losses and measurement noise.
+
+The findings indicate that external surface temperature measurements combined with temporally informed regression models can provide meaningful early thermal trend awareness without reliance on internal Battery Management System signals. This approach offers a practical, deployable, and non intrusive complementary safety layer for real world electric vehicle battery monitoring.
+
+\keywords{battery thermal monitoring \and external temperature sensing \and non-intrusive monitoring \and supervised regression with temporal dependence \and machine learning \and electric motorcycles \and real-world experiments}
+\end{abstract}
+
+\section{Introduction}
+The thermal safety of electric vehicles (EVs) represents one of the most critical challenges currently faced by the automotive industry, as phenomena such as thermal runaway can lead to uncontrollable fires, severe material damage, and significant risks to human life (Feng et al., 2018; Li et al., 2023). Battery thermal monitoring is traditionally performed through the Battery Management System (BMS), which relies on internal sensors to supervise cell and module temperatures and to enforce operational safety limits (Pesaran et al., 2017). However, these systems commonly depend on fixed thresholds or lookup tables derived from laboratory-based testing, which constrains their adaptability to the dynamic conditions of real-world operation and to the progressive aging of battery cells (Xie et al., 2020; Hong et al., 2022).
+
+In addition, onboard BMS microcontrollers are subject to strict computational and memory constraints, limiting the deployment of advanced artificial intelligence algorithms directly at the vehicle level (Li et al., 2021). In many practical scenarios, access to internal vehicle data through the Controller Area Network (CAN) bus is partial, noisy, or entirely unavailable, particularly in commercial or proprietary vehicle platforms. This lack of transparency undermines the reliability and generalizability of approaches that rely exclusively on internal signals such as voltage, current, state of charge (SOC), and internal temperature measurements (Wang et al., 2021; Zhang et al., 2022).
+
+Within this context, a notable gap can be observed in the literature regarding the use of external, non-intrusive sensors for battery thermal monitoring. The installation of internal sensors is often complex, costly, and difficult to retrofit in vehicles already in operation, whereas external clip-on temperature sensors offer a low-cost, flexible, and architecture-independent alternative (Yu et al., 2019; Li et al., 2021). Nevertheless, data-driven approaches based on external sensing introduce additional challenges, including intermittent signal loss, asynchronous data transmission, and the influence of environmental conditions, all of which may degrade the accuracy of real-time thermal diagnostics (Abdollahi et al., 2021; Li et al., 2021).
+
+In light of these limitations, this work proposes a machine learning–based approach for battery thermal monitoring and short-horizon temperature prediction that relies exclusively on temperature data collected by external, non-intrusive hardware. The proposed solution operates as an additional thermal monitoring layer, independent of the vehicle’s internal parameters, and is designed to remain robust under conditions characterized by incomplete, noisy, or irregularly sampled data. By decoupling thermal risk assessment from proprietary BMS data, the proposed approach aims to improve the practicality and deployability of early thermal risk detection in real-world electric vehicle applications.
+
+\section{Related Work}
+\subsection{Battery Thermal Monitoring}
+Battery thermal monitoring is commonly implemented within the Battery Management System (BMS) using internal sensors and CAN-bus supervision (Smith et al., 2020; Zhang et al., 2021). Production systems often rely on fixed or semi-adaptive thresholds calibrated in laboratory conditions, which limits generalization to varying ambient conditions, heterogeneous vehicle platforms, and cell aging effects (Li et al., 2022). Because access to internal temperature signals and CAN data is frequently proprietary, independent and aftermarket monitoring is constrained, motivating alternative sensing and analytics approaches.
+
+\subsection{Anomaly Detection in EV Batteries}
+Model-based methods use electrochemical/thermal models and observers (e.g., Kalman filters) to detect deviations, but require accurate parameterization and can be sensitive to modeling errors (Chen et al., 2019; Sun et al., 2020). Data-driven approaches using machine learning (e.g., random forests, neural networks) have been applied to identify abnormal behavior, typically assuming internal BMS measurements such as voltage, current, SOC, and internal temperature (Wang et al., 2021; Hong et al., 2022). Practical deployment is challenged by proprietary access, embedded resource constraints, and real-world data issues (missing samples, noise, intermittent connectivity).
+
+\subsection{Machine Learning with Temporal Features for Thermal Systems}
+Predictive models are increasingly used to anticipate temperature evolution and enable early risk awareness. Classical statistical time series models (e.g., ARIMA) rely on assumptions of linearity and stationarity that may degrade under nonlinear, non-stationary dynamics typical of EV operation (Box et al., 2015). Recent work explores machine learning and deep learning approaches (e.g., LSTM/GRU/TCN) for temperature prediction in thermal monitoring contexts (Zhao et al., 2021; Liu et al., 2023), often framing the task as supervised learning with sequential inputs. However, many studies assume continuous high-quality internal sensing streams, which is not always available in real-world or retrofit scenarios.
+
+\subsection{Research Gap Summary}
+Overall, existing methods largely depend on internal BMS data channels and embedded sensing, limiting deployability across proprietary fleets. There remains a gap in approaches that (i) rely exclusively on external, non-intrusive temperature sensing, (ii) are robust to real-world telemetry imperfections, and (iii) formulate temperature prediction as supervised regression with explicit temporal context to provide early thermal trend awareness under real operating conditions.
+
+\section{System Architecture and Methodology}
+
+\subsection{Data Collection Architecture}
+The data collection system followed a hybrid architecture integrating embedded sensing, a mobile gateway, and a backend infrastructure for storage and analysis. The embedded unit was built around an ESP32 microcontroller, selected due to low cost and BLE support for continuous data streaming in mobile environments. The sensing layer comprised external DS18B20 sensors measuring battery casing surface temperature, motor surface temperature, and ambient temperature. An MPU-6050 triaxial accelerometer captured vibration/acceleration patterns to characterize the operating regime.
+
+Communication between ESP32 and gateway was performed via Bluetooth Low Energy. A mobile device acted as concentrator, receiving telemetry and adding geolocation and instantaneous speed from GPS. The consolidated dataset was transmitted to a backend server and persisted in a MongoDB non relational database to support temporal data management and analytical processing.
+
+\begin{figure}[t]
+\centering
+\subfloat[Architecture overview]{%
+  \includegraphics[width=0.48\textwidth]{img/data-architecture.png}%
+  \label{fig:data-architecture}%
+}
+\hfill
+\subfloat[ESP32-based sensing prototype]{%
+  \includegraphics[width=0.48\textwidth]{img/cicuit-sensors.png}%
+  \label{fig:prototype}%
+}
+\caption{Data acquisition and sensing setup used in this work.}
+\label{fig:arch-and-prototype}
+\end{figure}
+
+\subsection{Machine Learning Models for Temperature Prediction}
+Thermal analysis was formulated as a supervised regression problem with temporal dependence to predict near-future battery surface temperature from historical external measurements and operational variables. Instead of employing classical statistical time series models, the approach relies on tabular machine learning algorithms trained on engineered features that encode temporal context (e.g., elapsed time and recent measurements).
+
+The evaluated models cover complementary bias--variance and interpretability trade-offs: KNN (local similarity), Decision Trees (interpretable baseline), Random Forest and Gradient Boosting (robust ensembles), and Multilayer Perceptron (nonlinear function approximation). This selection enables comparison across distance-based, tree-based, ensemble, and neural approaches under the same real-world telemetry constraints.
+
+\subsection{Experimental Data Collection Protocol}
+Experiments were conducted using an electric motorcycle instrumented with the described sensing system and connected to a smartphone for GPS-based acquisition. Three external temperature sensors monitored ambient temperature, motor surface temperature, and battery casing surface temperature. Data were collected during real-world rides along predefined urban routes on the UFPE campus in Recife, Brazil. Each run lasted approximately ten minutes, capturing gradual thermal evolution.
+
+To induce operational variability, multiple riding modes were used across runs (Eco, Normal, Turbo), producing distinct power delivery profiles and thermal responses. Routes were repeated to support comparability and reproducibility; GPS trajectories were used to reconstruct route maps for each mode.
+
+\begin{figure}[t]
+\centering
+\subfloat[Instrumented platform]{%
+  \includegraphics[width=0.48\textwidth]{img/motocycle.png}%
+  \label{fig:motorcycle}%
+}
+\hfill
+\subfloat[Routes by mode]{%
+  \includegraphics[width=0.48\textwidth]{img/map-eco.png}%
+}
+\\[-0.2em]
+\subfloat[]{%
+  \includegraphics[width=0.31\textwidth]{img/map-nor.png}%
+  \label{fig:map-nor}%
+}
+\hfill
+\subfloat[]{%
+  \includegraphics[width=0.31\textwidth]{img/map-tur.png}%
+  \label{fig:map-tur}%
+}
+\caption{Experimental setup and reconstructed routes used during data collection.}
+\label{fig:platform-and-routes}
+\end{figure}
+
+\subsection{Data Preprocessing}
+Telemetry exports were consolidated into a structured dataset containing timestamps, GPS coordinates, speed, accelerometer readings, and temperatures. Driving mode was encoded numerically, elapsed time was computed per run, and implausible temperature samples associated with communication failures were removed. Features included ambient temperature, speed, acceleration components, driving mode, and elapsed time, with battery casing surface temperature as the target variable. The dataset was split into training and test subsets (80/20) to evaluate generalization.
+
+\subsection{Software Environment and Model Training}
+The workflow was implemented in Python using pandas/NumPy for data handling and Scikit-learn for modeling. StandardScaler was applied for normalization, and RandomizedSearchCV with cross-validation was used for hyperparameter tuning. Execution time, CPU usage, and memory consumption were recorded during training to analyze the performance--cost trade-off. The best estimator for each model was retrained on the training set and evaluated on the unseen test set.
+
+\subsection{Regression-Based Thermal Risk Assessment}
+Instead of direct fault classification, thermal risk awareness was derived from regression-based temperature predictions by comparing predicted trajectories against predefined safety thresholds. Sustained predicted growth or threshold exceedance was treated as an early indicator of abnormal thermal behavior, enabling anticipatory monitoring without labeled fault data or internal vehicle signals.
+
+\section{Results}
+
+\subsection{Dataset Description}
+After preprocessing and removal of invalid samples, the dataset contained approximately one thousand synchronized records from real-world riding experiments under three driving modes. Each record included battery surface temperature, ambient temperature, speed, triaxial acceleration, elapsed time, and mode.
+
+\begin{table}[t]
+\centering
+\caption{Descriptive statistics for key variables (treated dataset).}
+\label{tab:desc-stats}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrr}
+\hline
+Variable & Count & Mean & Std & Min & Max \\
+\hline
+temp\_battery & 1006.0 & 33.663082 & 0.886562 & 32.69 & 35.62 \\
+speed         & 1006.0 &  9.031026 & 4.271617 &  0.00 & 19.05 \\
+accX          & 1006.0 & 1096.579523 & 233.007021 & 167.00 & 2808.00 \\
+temp\_amb     & 1006.0 & 31.884920 & 0.489337 & 30.44 & 33.12 \\
+\hline
+\end{tabular}
+\end{table}
+
+Minor data losses occurred due to transient communication/sensor issues, but preprocessing preserved temporal continuity. The dataset reflects realistic operational variability (acceleration, cruising, stops, speed fluctuations), providing a representative basis for thermal analysis and supervised regression with temporal context.
+
+\subsection{Battery Thermal Behavior}
+Across all runs, battery surface temperature increased gradually and monotonically, consistent with thermal inertia. Higher power demand modes exhibited higher temperatures and steeper gradients, while lower demand modes were more stable. No abrupt spikes remained after outlier filtering, indicating stable operation during monitored sessions.
+
+\begin{figure}[t]
+\centering
+\subfloat[Temperature evolution]{%
+  \includegraphics[width=0.48\textwidth]{img/battery_eda_evolucao_temp_tratados.png}%
+  \label{fig:temp-evolution}%
+}
+\hfill
+\subfloat[Temperature distribution]{%
+  \includegraphics[width=0.48\textwidth]{img/battery_eda_boxplot_temp_tratados.png}%
+  \label{fig:temp-boxplot}%
+}
+\caption{Battery temperature analysis across driving modes.}
+\label{fig:temp-analysis}
+\end{figure}
+
+\subsection{Influence of Operating Conditions}
+Driving mode was strongly associated with temperature levels and gradients. Speed and elapsed time showed a positive association with temperature evolution, reflecting cumulative energy usage. Ambient temperature contributed mainly to baseline levels. Acceleration/vibration signals exhibited lower direct correlation with instantaneous battery temperature, but helped characterize operational regimes. Overall, the multivariate structure supports the use of supervised machine learning models incorporating temporal features.
+
+\subsection{Observed Thermal Irregularities}
+Exploratory analysis of raw data revealed isolated anomalous readings attributed to communication failures rather than true thermal events. After filtering, the temporal profiles no longer exhibited spurious spikes or drops. No sustained overheating events occurred, supporting evaluation focused on trend anticipation rather than fault classification.
+
+\subsection{Temperature Prediction Performance}
+Models were evaluated for predicting battery surface temperature. Temporal features capturing thermal inertia substantially improved accuracy compared to using only instantaneous variables. Tree-based ensembles and MLP provided strong alignment between predicted and observed trajectories, while simpler models were more sensitive to noise.
+
+\begin{table}[t]
+\centering
+\caption{Prediction performance and training cost on the treated dataset.}
+\label{tab:model-performance}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\hline
+Model & $R^2$ & MAE & RMSE & Train (s) & CPU (\%) & RAM (MB) \\
+\hline
+Random Forest     & 0.9994 & 0.0124 & 0.0214 & 0.990 & 4.92  & 1735 \\
+Decision Tree     & 0.9992 & 0.0124 & 0.0248 & 0.104 & 9.86  & 1734 \\
+Gradient Boosting & 0.9984 & 0.0236 & 0.0346 & 0.763 & 10.80 & 1624 \\
+MLP               & 0.9899 & 0.0652 & 0.0864 & 2.200 & 2.16  & 1511 \\
+KNN               & 0.9747 & 0.0725 & 0.1370 & 0.110 & 9.29  & 1809 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\subfloat[Correlation matrix]{%
+  \includegraphics[width=0.48\textwidth]{img/battery_eda_correlacao_tratados.png}%
+  \label{fig:corr-matrix}%
+}
+\hfill
+\subfloat[Model comparison]{%
+  \includegraphics[width=0.48\textwidth]{img/battery_performance_modelos_tratados.png}%
+  \label{fig:model-performance}%
+}
+\caption{Relationship analysis and prediction performance overview.}
+\label{fig:analysis-and-performance}
+\end{figure}
+
+\subsection{Early Overheating Detection}
+Predicted temperature trajectories were compared against predefined safety thresholds. Although no critical events occurred during experiments, the supervised regression models captured upward trends ahead of time, indicating feasibility for early thermal trend awareness using only external non-intrusive sensing and temporally informed machine learning models.
+
+\section{Discussion}
+The observed gradual temperature dynamics are consistent with prior studies on battery thermal monitoring and anomaly detection that emphasize temperature evolution as a key safety indicator (Xie et al., 2017; Feng et al., 2018; Srinivasan et al., 2019). Unlike threshold-only strategies that react after conditions manifest (Nascimento et al., 2020), supervised regression with temporal context supports anticipatory awareness by projecting near-future temperature trajectories.
+
+A central practical contribution is independence from internal BMS channels. Many existing methods rely on rich internal sensing and proprietary access, while this work demonstrates that external surface measurements combined with operational context can still provide meaningful trend awareness under real-world telemetry imperfections. This makes the approach suitable as a complementary safety layer for retrofit and fleet monitoring scenarios where invasive instrumentation and CAN access are limited.
+
+Limitations remain: surface temperature is an indirect proxy for internal states and may lag fast fault escalation; sensor placement and environmental variability can influence readings; and the dataset reflects a single platform with no observed overheating events, restricting conclusions to trend awareness rather than validated failure prognosis. Future work requires broader vehicle diversity, longer-term data, and evaluation under more extreme thermal regimes.
+
+\begin{thebibliography}{00}
+\bibitem{b1} H. Togun, A. Basen, J. M. Dhabab, \textit{et al.}, ``A comprehensive review of battery thermal management systems for electric vehicles: Enhancing performance, sustainability, and future trends,'' \textit{International Journal of Hydrogen Energy}, vol. 97, no. 5, pp. 1077--1107, Jan. 2025, doi: 10.1016/j.ijhydene.2024.11.093.
+\bibitem{b2} D. Tan \textit{et al.}, ``Study on the thermal characteristics of in-wheel motor drive system based on driving cycles,'' \textit{IEEE Access}, vol. 7, pp. 14463--14471, Dec. 2018, doi: 10.1109/ACCESS.2018.2887143.
+\bibitem{b3} A. Boglietti \textit{et al.}, ``Evolution and modern approaches for thermal analysis of electrical machines,'' \textit{IEEE Transactions on Industrial Electronics}, vol. 56, no. 3, pp. 871--882, Mar. 2009, doi: 10.1109/TIE.2008.2011622.
+\bibitem{b4} W. Kirchga\ss{}ner, O. Wallscheid, and J. Bocker, ``Estimating electric motor temperatures with deep residual machine learning,'' \textit{IEEE Transactions on Power Electronics}, vol. 36, no. 7, pp. 7480--7488, Jul. 2021, doi: 10.1109/TPEL.2020.3045596.
+\bibitem{b5} O. Wallscheid, ``Thermal monitoring of electric motors: State-of-the-art review and future challenges,'' \textit{IEEE Open Journal of Industry Applications}, vol. 2, pp. 204--223, 2021, doi: 10.1109/OJIA.2021.3091870.
+\bibitem{b6} ``Weather prediction system using KNN classification algorithm,'' \textit{European Journal of Information Technologies and Computer Science}, vol. 2, no. 1, pp. 10--13, 2022, doi: 10.24018/compute.2022.2.1.44.
+\bibitem{b7} IBM, ``What is the k-nearest neighbors (KNN) algorithm?'' [Online]. Available: \url{https://www.ibm.com/think/topics/knn}
+\bibitem{b8} IBM, ``What is a decision tree?'' [Online]. Available: \url{https://www.ibm.com/think/topics/decision-trees}
+\bibitem{b9} B. Talekar, ``A detailed review on decision tree and random forest,'' \textit{Bioscience Biotechnology Research Communications}, vol. 13, pp. 245--248, 2020, doi: 10.21786/bbrc/13.14/57.
+\bibitem{b10} M. Cioch, M. Kulisz, and A. Gola, ``Comparison of machine learning methods in predictive maintenance of machines,'' \textit{Advances in Science and Technology Research Journal}, vol. 19, no. 11, pp. 33--44, Nov. 2025, doi: 10.12913/22998624/208284.
+\bibitem{b11} IBM, ``What is random forest?'' [Online]. Available: \url{https://www.ibm.com/think/topics/random-forest}
+\bibitem{b12} Y. Yang and H. Wang, ``Random Forest-based machine failure prediction: A performance comparison,'' \textit{Applied Sciences}, vol. 15, p. 8841, 2025, doi: 10.3390/app15168841.
+\bibitem{b13} M. Wu \textit{et al.}, ``An intelligent predictive maintenance system based on random forest for addressing industrial conveyor belt challenges,'' \textit{Frontiers in Mechanical Engineering}, vol. 10, Dec. 2024, doi: 10.3389/fmech.2024.1383202.
+\bibitem{b14} E. Kavlakoglu and E. Russi, ``XGBoost.'' [Online]. Available: \url{https://www.ibm.com/think/topics/xgboost}
+\bibitem{b15} R. Shwartz-Ziv and A. Armon, ``Tabular data: Deep learning is not all you need,'' \textit{arXiv} preprint, 2021, doi: 10.48550/arXiv.2106.03253.
+\bibitem{b16} T. Kotsiopoulos \textit{et al.}, ``Machine learning and deep learning in smart manufacturing: The smart grid paradigm,'' \textit{Computer Science Review}, vol. 40, p. 100341, May 2021, doi: 10.1016/j.cosrev.2020.100341.
+\bibitem{b17} F. Aksan, V. Suresh, and P. Janik, ``PV generation prediction using multilayer perceptron and data clustering for energy management support,'' \textit{Energies}, vol. 18, no. 6, p. 1378, Mar. 2025, doi: 10.3390/en18061378.
+\bibitem{b18} V. R. Joseph, ``Optimal ratio for data splitting,'' \textit{Statistical Analysis and Data Mining: The ASA Data Science Journal}, vol. 15, no. 4, pp. 531--538, Apr. 2022, doi: 10.1002/sam.11583.
+\bibitem{b19} W. McKinney, ``Pandas: A foundational Python library for data analysis and statistics,'' in \textit{Python High Performance Science Computing}, vol. 14, pp. 1--9, 2011.
+\bibitem{b20} M. M. Ahsan \textit{et al.}, ``Effect of data scaling methods on machine learning algorithms and model performance,'' \textit{Technologies}, vol. 9, no. 3, p. 52, Jul. 2021.
+\bibitem{b21} L. Yang and A. Shami, ``On hyperparameter optimization of machine learning algorithms: Theory and practice,'' \textit{Neurocomputing}, vol. 415, pp. 295--316, Nov. 2020.
+\bibitem{b22} A. Vabalas \textit{et al.}, ``Machine learning algorithm validation with a limited sample size,'' \textit{PLOS ONE}, vol. 14, no. 11, p. e0224365, Nov. 2019.
+\bibitem{b23} S. Kishore \textit{et al.}, ``Temperature prediction for electric vehicles using machine learning algorithms,'' \textit{IEEE Transactions on Industry Applications}, vol. 60, no. 6, pp. 9251--9259, Sep. 2024.
+\bibitem{b24} D. Bora, D. Singh, and B. Negi, ``Utilization of DS18B20 temperature sensor for predictive maintenance of reciprocating compressor,'' in \textit{Proc. 2023 International Conference on Power Energy, Environment \& Intelligent Control (PEEIC)}, Dec. 2023, pp. 147--150.
+\bibitem{b25} A. Kowalskie, ``The impact of outliers on linear regression models: Detection and correction strategies,'' \textit{OTS Canadian Journal}, vol. 4, no. 6, pp. 108--118, Jun. 2025.
+\bibitem{b26} L. Grinsztajn, E. Oyallon, and G. Varoquaux, ``Why do tree-based models still outperform deep learning on tabular data?'' \textit{arXiv} preprint arXiv:2207.08815, 2022.
+\end{thebibliography}
+
+\end{document}
