@@ -1,6 +1,6 @@
 Modelo,R²,MAE,RMSE,Tempo Treino,CPU (%),RAM (MB),Melhor Config
-RandomForest,0.9994087653410701,0.012271226426220437,0.020960819017346356,0.6657133102416992,3.3466666666666662,1355.21875,"{'n_estimators': 100, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_features': 1.0, 'max_depth': 20}"
-DecisionTree,0.9992722013319254,0.01114356435643623,0.02325594190488528,0.1061408519744873,10.0,1342.546875,"{'min_samples_split': np.int64(2), 'min_samples_leaf': np.int64(3), 'max_depth': None, 'criterion': 'squared_error'}"
-GradientBoosting,0.9985554098640155,0.024341837816899303,0.032764279958919236,0.6549160480499268,11.783333333333333,1375.71875,"{'subsample': 0.8, 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.1, 'colsample_bytree': 0.9}"
-KNN,0.9792686884589853,0.07088231940409796,0.12411997935302833,0.1114339828491211,8.17,1340.875,"{'weights': 'distance', 'n_neighbors': np.int64(3), 'metric': 'manhattan'}"
-MLP,0.8481772071160927,0.2595092676979256,0.33588978299226013,1.319751262664795,2.225,1376.859375,"{'solver': 'adam', 'learning_rate_init': 0.01, 'hidden_layer_sizes': (100,), 'alpha': 0.01, 'activation': 'tanh'}"
+RandomForest,0.9994087653410701,0.012271226426220437,0.020960819017346356,0.6961891651153564,3.705,1968.1875,"{'n_estimators': 100, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_features': 1.0, 'max_depth': 20}"
+DecisionTree,0.9992722013319254,0.01114356435643623,0.02325594190488528,0.10928606986999512,10.02,1954.9375,"{'min_samples_split': np.int64(2), 'min_samples_leaf': np.int64(3), 'max_depth': None, 'criterion': 'squared_error'}"
+GradientBoosting,0.9985554098640155,0.024341837816899303,0.032764279958919236,0.6762790679931641,12.9,1990.40625,"{'subsample': 0.8, 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.1, 'colsample_bytree': 0.9}"
+KNN,0.9792686884589853,0.07088231940409796,0.12411997935302833,0.11408376693725586,9.58,1954.4375,"{'weights': 'distance', 'n_neighbors': np.int64(3), 'metric': 'manhattan'}"
+MLP,0.8481772071160927,0.2595092676979256,0.33588978299226013,1.2650060653686523,2.2245454545454546,1991.28125,"{'solver': 'adam', 'learning_rate_init': 0.01, 'hidden_layer_sizes': (100,), 'alpha': 0.01, 'activation': 'tanh'}"

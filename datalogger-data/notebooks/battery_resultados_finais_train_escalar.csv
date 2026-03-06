@@ -1,6 +1,6 @@
 Modelo,R²,MAE,RMSE,Tempo Treino,CPU (%),RAM (MB),Melhor Config
-RandomForest,0.9994087653410701,0.012271226426220437,0.020960819017346356,0.6769521236419678,2.893333333333333,1026.171875,"{'n_estimators': 100, 'min_samples_split': 2, 'min_samples_leaf': 2, 'max_features': 1.0, 'max_depth': 20}"
-DecisionTree,0.9992722013319254,0.01114356435643623,0.02325594190488528,0.106842041015625,9.89,940.9375,"{'min_samples_split': np.int64(2), 'min_samples_leaf': np.int64(3), 'max_depth': None, 'criterion': 'squared_error'}"
-GradientBoosting,0.9985554098640155,0.024341837816899303,0.032764279958919236,0.6555159091949463,10.306666666666667,1115.453125,"{'subsample': 0.8, 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.1, 'colsample_bytree': 0.9}"
-KNN,0.9792686884589853,0.07088231940409796,0.12411997935302833,0.21932172775268555,6.529999999999999,941.984375,"{'weights': 'distance', 'n_neighbors': np.int64(3), 'metric': 'manhattan'}"
-MLP,0.8481772071160927,0.2595092676979256,0.33588978299226013,1.212934970855713,2.0218181818181815,1130.984375,"{'solver': 'adam', 'learning_rate_init': 0.01, 'hidden_layer_sizes': (100,), 'alpha': 0.01, 'activation': 'tanh'}"
+MLP,-0.28904911319676696,0.832681541458606,0.9878301154148103,2.3277719020843506,1.6895,2166.546875,"{'solver': 'adam', 'learning_rate_init': 0.001, 'hidden_layer_sizes': (50,), 'alpha': 0.01, 'activation': 'tanh'}"
+GradientBoosting,-1.0596153959651202,0.5823075179298327,1.2486496354082828,0.449084997177124,8.3875,2165.203125,"{'subsample': 0.7, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 0.7}"
+RandomForest,-2.7030902660151623,0.6882236376198033,1.6742861286132196,0.5630369186401367,3.006,2130.703125,"{'n_estimators': 100, 'min_samples_split': 10, 'min_samples_leaf': 4, 'max_features': 'log2', 'max_depth': 20}"
+KNN,-5.250975310243468,0.6176630351681066,2.1753113291150936,0.1140127182006836,9.39,2099.6875,"{'weights': 'distance', 'n_neighbors': np.int64(19), 'metric': 'euclidean'}"
+DecisionTree,-167.33777930481511,0.8065346534653465,11.288554310266731,0.11528706550598145,9.98,2102.28125,"{'min_samples_split': np.int64(8), 'min_samples_leaf': np.int64(1), 'max_depth': np.int64(10), 'criterion': 'absolute_error'}"
