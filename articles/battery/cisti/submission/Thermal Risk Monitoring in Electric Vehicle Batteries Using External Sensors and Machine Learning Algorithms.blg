@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Thermal Risk Monitoring in Electric Vehicle Batteries Using External Sensors and Machine Learning Algorithms.aux
+The style file: splncs04.bst
+Database file #1: bibtex.bib
+You've used 12 entries,
+            2850 wiz_defined-function locations,
+            694 strings with 8431 characters,
+and the built_in function-call counts, 8660 in all, are:
+= -- 705
+> -- 313
+< -- 21
++ -- 128
+- -- 114
+* -- 617
+:= -- 1092
+add.period$ -- 26
+call.type$ -- 12
+change.case$ -- 94
+chr.to.int$ -- 0
+cite$ -- 12
+duplicate$ -- 740
+empty$ -- 704
+format.name$ -- 126
+if$ -- 1893
+int.to.chr$ -- 0
+int.to.str$ -- 12
+missing$ -- 157
+newline$ -- 42
+num.names$ -- 26
+pop$ -- 250
+preamble$ -- 1
+purify$ -- 78
+quote$ -- 0
+skip$ -- 240
+stack$ -- 0
+substring$ -- 479
+swap$ -- 482
+text.length$ -- 21
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 46
+warning$ -- 0
+while$ -- 59
+width$ -- 14
+write$ -- 156

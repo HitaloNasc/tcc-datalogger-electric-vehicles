@@ -1,0 +1,42 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{box2015timeseries}
+Box, G.E.P., Jenkins, G.M., Reinsel, G.C., Ljung, G.M.: Time Series Analysis: Forecasting and Control. Wiley, 5 edn. (2015)
+
+\bibitem{feng2018thermal}
+Feng, X., Ouyang, M., Liu, X., Lu, L., Xia, Y., He, X.: Thermal runaway mechanism of lithium ion battery for electric vehicles: A review. Energy Storage Materials  \textbf{10},  246--267 (2018). \doi{https://doi.org/10.1016/j.ensm.2017.05.013}, \url{https://www.sciencedirect.com/science/article/pii/S2405829716303464}
+
+\bibitem{grinsztajn2022tabular}
+Grinsztajn, L., Oyallon, E., Varoquaux, G.: Why do tree-based models still outperform deep learning on typical tabular data? In: Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., Oh, A. (eds.) Advances in Neural Information Processing Systems. vol.~35, pp. 507--520. Curran Associates, Inc. (2022), \url{https://proceedings.neurips.cc/paper_files/paper/2022/file/0378c7692da36807bdec87ab043cdadc-Paper-Datasets_and_Benchmarks.pdf}
+
+\bibitem{joseph2022split}
+Joseph, V.R.: Optimal ratio for data splitting. Statistical Analysis and Data Mining: The ASA Data Science Journal  \textbf{15}(4),  531--538 (2022). \doi{https://doi.org/10.1002/sam.11583}, \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/sam.11583}
+
+\bibitem{kirchgaessner2021motor}
+Kirchgässner, W., Wallscheid, O., Böcker, J.: Estimating electric motor temperatures with deep residual machine learning. IEEE Transactions on Power Electronics  \textbf{36}(7),  7480--7488 (2021). \doi{10.1109/TPEL.2020.3045596}
+
+\bibitem{kishore2024temperature}
+Kishore, S., Bharti, S.K., Anand, P., Srivastav, D., Sonali, S.: Temperature prediction for electric vehicles using machine learning algorithms. IEEE Transactions on Industry Applications  \textbf{60}(6),  9251--9259 (2024). \doi{10.1109/TIA.2024.3456753}
+
+\bibitem{li2023thermal}
+Li, D., Zhang, Z., Wang, Z., Liu, P., Liu, Z., Lin, N.: Timely thermal runaway prognosis for battery systems in real-world electric vehicles based on temperature abnormality. IEEE Journal of Emerging and Selected Topics in Power Electronics  \textbf{11}(1),  120--130 (2023). \doi{10.1109/JESTPE.2022.3153337}
+
+\bibitem{li2021datadriven}
+Li, X., Li, J., Abdollahi, A., Jones, T.: Data-driven thermal anomaly detection for batteries using unsupervised shape clustering. In: 2021 IEEE 30th International Symposium on Industrial Electronics (ISIE). p. 1–6. IEEE (Jun 2021). \doi{10.1109/isie45552.2021.9576348}, \url{http://dx.doi.org/10.1109/ISIE45552.2021.9576348}
+
+\bibitem{shwartz2021tabular}
+Shwartz-Ziv, R., Armon, A.: Tabular data: Deep learning is not all you need. Information Fusion  \textbf{81},  84--90 (2022). \doi{https://doi.org/10.1016/j.inffus.2021.11.011}, \url{https://www.sciencedirect.com/science/article/pii/S1566253521002360}
+
+\bibitem{togun2025comprehensive}
+Togun, H., Basem, A., dhabab, J.M., Mohammed, H.I., Sadeq, A.M., Biswas, N., Abdulrazzaq, T., Hasan, H.A., Homod, R.Z., Talebizadehsardari, P.: A comprehensive review of battery thermal management systems for electric vehicles: Enhancing performance, sustainability, and future trends. International Journal of Hydrogen Energy  \textbf{97},  1077--1107 (2025). \doi{https://doi.org/10.1016/j.ijhydene.2024.11.093}, \url{https://www.sciencedirect.com/science/article/pii/S0360319924047670}
+
+\bibitem{vabalas2019validation}
+Vabalas, A., Gowen, E., Poliakoff, E., Casson, A.J.: Machine learning algorithm validation with a limited sample size. PLOS ONE  \textbf{14}(11),  1--20 (11 2019). \doi{10.1371/journal.pone.0224365}, \url{https://doi.org/10.1371/journal.pone.0224365}
+
+\bibitem{yang20196077}
+Yang, S., Ling, C., Fan, Y., Yang, Y., Tan, X., Dong, H.: A review of lithium-ion battery thermal management system strategies and the evaluate criteria. International Journal of Electrochemical Science  \textbf{14}(7),  6077--6107 (2019). \doi{https://doi.org/10.20964/2019.07.06}, \url{https://www.sciencedirect.com/science/article/pii/S1452398123123558}
+
+\end{thebibliography}
